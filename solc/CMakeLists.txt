@@ -5,7 +5,7 @@ set(
 )
 
 add_executable(solc ${sources})
-target_link_libraries(solc PRIVATE solidity Boost::boost Boost::program_options)
+target_link_libraries(solc PRIVATE devcore solidity Boost::boost Boost::program_options)
 
 include(GNUInstallDirs)
 install(TARGETS solc DESTINATION "${CMAKE_INSTALL_BINDIR}")

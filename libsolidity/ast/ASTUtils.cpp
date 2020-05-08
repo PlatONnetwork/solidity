@@ -18,6 +18,8 @@
 #include <libsolidity/ast/AST.h>
 #include <libsolidity/ast/ASTUtils.h>
 
+using namespace std;
+
 namespace dev
 {
 namespace solidity

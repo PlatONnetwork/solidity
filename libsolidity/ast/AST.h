@@ -1888,8 +1888,6 @@ public:
 	bool looksLikeAddress() const;
 	/// @returns true if it passes the address checksum test.
 	bool passesAddressChecksum() const;
-	/// @returns the checksummed version of an address (or empty string if not valid)
-	std::string getChecksummedAddress() const;
 
 private:
 	Token m_token;

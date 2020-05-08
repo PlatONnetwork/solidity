@@ -2729,17 +2729,12 @@ void TypeChecker::endVisit(Literal const& _literal)
 		_literal.annotation().type = TypeProvider::payableAddress();
 
 		string msg;
-		if (_literal.valueWithoutUnderscores().length() != 42) // "0x" + 40 hex digits
-			// looksLikeAddress enforces that it is a hex literal starting with "0x"
+		if (_literal.valueWithoutUnderscores().length() != 42) // must 42 length
 			msg =
-				"This looks like an address but is not exactly 40 hex digits. It is " +
-				to_string(_literal.valueWithoutUnderscores().length() - 2) +
-				" hex digits.";
+				"This looks like an address but is not exactly bech32 fmt.";
 		else if (!_literal.passesAddressChecksum())
 		{
 			msg = "This looks like an address but has an invalid checksum.";
-			if (!_literal.getChecksummedAddress().empty())
-				msg += " Correct checksummed address: \"" + _literal.getChecksummedAddress() + "\".";
 		}
 
 		if (!msg.empty())

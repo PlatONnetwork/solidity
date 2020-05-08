@@ -3,8 +3,8 @@ pragma experimental SMTChecker;
 
 contract A {
 
-    address constant public MY_ADDRESS = 0xE0f5206BBD039e7b0592d8918820024e2a7437b9;
-    address public myFriendsAddress = 0xc0ffee254729296a45a3885639AC7E10F9d54979;
+    address constant public MY_ADDRESS = 'lat1ur6jq6aaqw08kpvjmzgcsgqzfc48gdaewm7z53';
+    address public myFriendsAddress = 'lat1crl7uf289y5k53dr3ptrntr7zrua2jtem6yudt';
 
     uint public used;
     uint public test = 5;
@@ -23,7 +23,7 @@ contract A {
 
 contract B is A {
 
-    address public mySistersAddress = 0x999999cf1046e68e36E1aA2E0E07105eDDD1f08E;
+    address public mySistersAddress = 'lat1nxvenncsgmngudhp4ghqupcstmwaruyw59wty3';
 
     fallback () external {
         used = 0;
@@ -51,7 +51,7 @@ contract MyConc{
 
 }
 // ----
-// Warning: (773-792): This declaration shadows an existing declaration.
-// Warning: (1009-1086): Function state mutability can be restricted to view
-// Warning: (985-1002): Underflow (resulting value less than 0) happens here.
-// Warning: (985-1002): Overflow (resulting value larger than 2**256 - 1) happens here.
+// Warning: (779-798): This declaration shadows an existing declaration.
+// Warning: (1015-1092): Function state mutability can be restricted to view
+// Warning: (991-1008): Underflow (resulting value less than 0) happens here.
+// Warning: (991-1008): Overflow (resulting value larger than 2**256 - 1) happens here.

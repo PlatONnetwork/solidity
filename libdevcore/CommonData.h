@@ -213,6 +213,12 @@ inline bytes asBytes(std::string const& _b)
 	return bytes((uint8_t const*)_b.data(), (uint8_t const*)(_b.data() + _b.size()));
 }
 
+/** Decode a Bech32 string. Returns (hrp, data). Empty hrp means failure. */
+std::pair<std::string, bytes> bech32decode(const std::string& str);
+
+/** Decode a bech32 address. return witprog. */
+bytes decodeAddress(const std::string& hrp, const std::string& addr);
+
 // Big-endian to/from host endian conversion functions.
 
 /// Converts a templated integer value to the big-endian byte-stream represented on a templated collection.
@@ -395,14 +401,8 @@ void iterateReplacingWindow(std::vector<T>& _vector, F const& _f)
 	detail::iterateReplacingWindow(_vector, _f, std::make_index_sequence<N>{});
 }
 
-/// @returns true iff @a _str passess the hex address checksum test.
-/// @param _strict if false, hex strings with only uppercase or only lowercase letters
-/// are considered valid.
-bool passesAddressChecksum(std::string const& _str, bool _strict);
-
-/// @returns the checksummed version of an address
-/// @param hex strings that look like an address
-std::string getChecksummedAddress(std::string const& _addr);
+/// @returns true iff @a _str passess the bech32 address checksum test.
+bool passesAddressChecksum(std::string const& _str);
 
 bool isValidHex(std::string const& _string);
 bool isValidDecimal(std::string const& _string);
