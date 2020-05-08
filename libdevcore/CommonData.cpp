@@ -96,41 +96,18 @@ bytes dev::fromHex(std::string const& _s, WhenError _throw)
 }
 
 
-bool dev::passesAddressChecksum(string const& _str, bool _strict)
+bool dev::passesAddressChecksum(string const& _str)
 {
-	string s = _str.substr(0, 2) == "0x" ? _str : "0x" + _str;
-
-	if (s.length() != 42)
+	if (_str.length() != 42)
 		return false;
 
-	if (!_strict && (
-		s.find_first_of("abcdef") == string::npos ||
-		s.find_first_of("ABCDEF") == string::npos
-	))
-		return true;
-
-	return s == dev::getChecksummedAddress(s);
-}
-
-string dev::getChecksummedAddress(string const& _addr)
-{
-	string s = _addr.substr(0, 2) == "0x" ? _addr.substr(2) : _addr;
-	assertThrow(s.length() == 40, InvalidAddress, "");
-	assertThrow(s.find_first_not_of("0123456789abcdefABCDEF") == string::npos, InvalidAddress, "");
-
-	h256 hash = keccak256(boost::algorithm::to_lower_copy(s, std::locale::classic()));
-
-	string ret = "0x";
-	for (size_t i = 0; i < 40; ++i)
-	{
-		char addressCharacter = s[i];
-		unsigned nibble = (unsigned(hash[i / 2]) >> (4 * (1 - (i % 2)))) & 0xf;
-		if (nibble >= 8)
-			ret += toupper(addressCharacter);
-		else
-			ret += tolower(addressCharacter);
+	pair<string,bytes> ret = bech32decode(boost::erase_all_copy(_str, "_"));
+	string hrp = ret.first;
+	if (hrp != "lat" && hrp != "lax") {
+		return false;
 	}
-	return ret;
+
+	return true;
 }
 
 bool dev::isValidHex(string const& _string)
@@ -155,3 +132,145 @@ bool dev::isValidDecimal(string const& _string)
 		return false;
 	return true;
 }
+
+/** The Bech32 character set for encoding. */
+const char* charset = "qpzry9x8gf2tvdw0s3jn54khce6mua7l";
+
+/** The Bech32 character set for decoding. */
+const int8_t charset_rev[128] = {
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+    15, -1, 10, 17, 21, 20, 26, 30,  7,  5, -1, -1, -1, -1, -1, -1,
+    -1, 29, -1, 24, 13, 25,  9,  8, 23, -1, 18, 22, 31, 27, 19, -1,
+     1,  0,  3, 16, 11, 28, 12, 14,  6,  4,  2, -1, -1, -1, -1, -1,
+    -1, 29, -1, 24, 13, 25,  9,  8, 23, -1, 18, 22, 31, 27, 19, -1,
+     1,  0,  3, 16, 11, 28, 12, 14,  6,  4,  2, -1, -1, -1, -1, -1
+};
+
+/** Concatenate two byte arrays. */
+bytes cat(bytes x, const bytes& y) {
+    x.insert(x.end(), y.begin(), y.end());
+    return x;
+}
+
+/** Find the polynomial with value coefficients mod the generator as 30-bit. */
+uint32_t polymod(const bytes& values) {
+    uint32_t chk = 1;
+    for (size_t i = 0; i < values.size(); ++i) {
+        uint8_t top = chk >> 25;
+        chk = (chk & 0x1ffffff) << 5 ^ values[i] ^
+            (-((top >> 0) & 1) & 0x3b6a57b2UL) ^
+            (-((top >> 1) & 1) & 0x26508e6dUL) ^
+            (-((top >> 2) & 1) & 0x1ea119faUL) ^
+            (-((top >> 3) & 1) & 0x3d4233ddUL) ^
+            (-((top >> 4) & 1) & 0x2a1462b3UL);
+    }
+    return chk;
+}
+
+/** Convert to lower case. */
+unsigned char lc(unsigned char c) {
+    return (c >= 'A' && c <= 'Z') ? (c - 'A') + 'a' : c;
+}
+
+/** Expand a HRP for use in checksum computation. */
+bytes expand_hrp(const string& hrp) {
+    bytes ret;
+    ret.resize(hrp.size() * 2 + 1);
+    for (size_t i = 0; i < hrp.size(); ++i) {
+        unsigned char c = hrp[i];
+        ret[i] = c >> 5;
+        ret[i + hrp.size() + 1] = c & 0x1f;
+    }
+    ret[hrp.size()] = 0;
+    return ret;
+}
+
+/** Verify a checksum. */
+bool verify_checksum(const string& hrp, const bytes& values) {
+    return polymod(cat(expand_hrp(hrp), values)) == 1;
+}
+
+/** Create a checksum. */
+bytes create_checksum(const string& hrp, const bytes& values) {
+    bytes enc = cat(expand_hrp(hrp), values);
+    enc.resize(enc.size() + 6);
+    uint32_t mod = polymod(enc) ^ 1;
+    bytes ret;
+    ret.resize(6);
+    for (size_t i = 0; i < 6; ++i) {
+        ret[i] = (mod >> (5 * (5 - i))) & 31;
+    }
+    return ret;
+}
+
+/** Decode a Bech32 string. */
+pair<string, bytes> dev::bech32decode(const string& str) {
+    bool lower = false, upper = false;
+    bool ok = true;
+    for (size_t i = 0; ok && i < str.size(); ++i) {
+        unsigned char c = str[i];
+        if (c < 33 || c > 126) ok = false;
+        if (c >= 'a' && c <= 'z') lower = true;
+        if (c >= 'A' && c <= 'Z') upper = true;
+    }
+    if (lower && upper) ok = false;
+    size_t pos = str.rfind('1');
+    if (ok && str.size() <= 90 && pos != str.npos && pos >= 1 && pos + 7 <= str.size()) {
+        bytes values;
+        values.resize(str.size() - 1 - pos);
+        for (size_t i = 0; i < str.size() - 1 - pos; ++i) {
+            unsigned char c = str[i + pos + 1];
+            if (charset_rev[c] == -1) ok = false;
+            values[i] = charset_rev[c];
+        }
+        if (ok) {
+            string hrp;
+            for (size_t i = 0; i < pos; ++i) {
+                hrp += lc(str[i]);
+            }
+            if (verify_checksum(hrp, values)) {
+                return make_pair(hrp, bytes(values.begin(), values.end() - 6));
+            }
+        }
+    }
+    return make_pair(string(), bytes());
+}
+
+/** Convert from one power-of-2 number base to another. */
+template<int frombits, int tobits, bool pad>
+bool convertbits(bytes& out, const bytes& in) {
+    int acc = 0;
+    int bits = 0;
+    const int maxv = (1 << tobits) - 1;
+    const int max_acc = (1 << (frombits + tobits - 1)) - 1;
+    for (size_t i = 0; i < in.size(); ++i) {
+        int value = in[i];
+        acc = ((acc << frombits) | value) & max_acc;
+        bits += frombits;
+        while (bits >= tobits) {
+            bits -= tobits;
+            out.push_back((acc >> bits) & maxv);
+        }
+    }
+    if (pad) {
+        if (bits) out.push_back((acc << (tobits - bits)) & maxv);
+    } else if (bits >= frombits || ((acc << (tobits - bits)) & maxv)) {
+        return false;
+    }
+    return true;
+}
+
+/** Decode a bech32 address. */
+bytes dev::decodeAddress(const std::string& hrp, const std::string& addr) {
+	pair<string, bytes> dec = dev::bech32decode(addr);
+    if (dec.first != hrp || dec.second.size() < 1) return bytes();
+    bytes output;
+	bool r = convertbits<5, 8, false>(output, dec.second);
+    if (!r||output.size() < 2 || output.size() > 40 ) {
+        return bytes();
+    }
+    return output;
+}
+
