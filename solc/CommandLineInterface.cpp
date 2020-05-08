@@ -495,10 +495,9 @@ bool CommandLineInterface::parseLibraryOption(string const& _input)
 				cerr << "Invalid length for address for library \"" << libName << "\": " << addrString.length() << " instead of 40 characters." << endl;
 				return false;
 			}
-			if (!passesAddressChecksum(addrString, false))
+			if (!passesAddressChecksum(addrString))
 			{
-				cerr << "Invalid checksum on address for library \"" << libName << "\": " << addrString << endl;
-				cerr << "The correct checksum is " << dev::getChecksummedAddress(addrString) << endl;
+				serr() << "Invalid checksum on address for library \"" << libName << "\": " << addrString << endl;
 				return false;
 			}
 			bytes binAddr = fromHex(addrString);
