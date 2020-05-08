@@ -5,4 +5,4 @@ contract C {
     }
 }
 // ----
-// SyntaxError: (64-105): This looks like an address but is not exactly 40 hex digits. It is 39 hex digits. If this is not used as an address, please prepend '00'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+// TypeError: (54-107): Type int_const 5735...(39 digits omitted)...4670 is not implicitly convertible to expected type address.
