@@ -1,8 +1,8 @@
 contract C {
     function f() pure public {
-        address x = 0xA0bFc97E48458494Ccd857e1A85DC91F7F0046E;
+        address x = 'lat1pg9le9lys3vyjnxds4lp4pwuj8mlqprwguzs9';
         x;
     }
 }
 // ----
-// TypeError: (54-107): Type int_const 5735...(39 digits omitted)...4670 is not implicitly convertible to expected type address.
+// TypeError: (52-107): Type literal_string "lat1pg9le9lys3vyjnxds4lp4pwuj8mlqprwguzs9" is not implicitly convertible to expected type address.
