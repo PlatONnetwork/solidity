@@ -5,4 +5,4 @@ contract C {
     }
 }
 // ----
-// TypeError: (54-109): Type int_const 2284...(42 digits omitted)...9360 is not implicitly convertible to expected type address.
+// TypeError: (52-107): Type int_const 2284...(42 digits omitted)...9360 is not implicitly convertible to expected type address.
