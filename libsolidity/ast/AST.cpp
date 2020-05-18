@@ -589,25 +589,32 @@ bool Literal::looksLikeAddress() const
 	if (subDenomination() != SubDenomination::None)
 		return false;
 
-	if (!isHexNumber())
-		return false;
-
-	return abs(int(value().length()) - 42) <= 1;
+	string realValue = boost::erase_all_copy(value(), "_");
+	bool isAddPrefix = boost::starts_with(realValue, "lat") || boost::starts_with(realValue, "lax");
+	return isAddPrefix && realValue.length() == 42;	
 }
 
-bool Literal::passesAddressChecksum() const
-{
-	solAssert(isHexNumber(), "Expected hex number");
-	return dev::passesAddressChecksum(value(), true);
-}
 
-std::string Literal::getChecksummedAddress() const
-{
-	solAssert(isHexNumber(), "Expected hex number");
-	/// Pad literal to be a proper hex address.
-	string address = value().substr(2);
-	if (address.length() > 40)
-		return string();
-	address.insert(address.begin(), 40 - address.size(), '0');
-	return dev::getChecksummedAddress(address);
+/** Convert from one power-of-2 number base to another. */
+template<int frombits, int tobits, bool pad>
+bool convertbits(bytes& out, const bytes& in) {
+    int acc = 0;
+    int bits = 0;
+    const int maxv = (1 << tobits) - 1;
+    const int max_acc = (1 << (frombits + tobits - 1)) - 1;
+    for (size_t i = 0; i < in.size(); ++i) {
+        int value = in[i];
+        acc = ((acc << frombits) | value) & max_acc;
+        bits += frombits;
+        while (bits >= tobits) {
+            bits -= tobits;
+            out.push_back((acc >> bits) & maxv);
+        }
+    }
+    if (pad) {
+        if (bits) out.push_back((acc << (tobits - bits)) & maxv);
+    } else if (bits >= frombits || ((acc << (tobits - bits)) & maxv)) {
+        return false;
+    }
+    return true;
 }
