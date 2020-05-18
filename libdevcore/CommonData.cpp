@@ -54,6 +54,7 @@ std::string dev::escaped(std::string const& _s, bool _all)
 			ret.push_back(i);
 	ret.push_back('"');
 	return ret;
+}
 string dev::toHex(bytes const& _data, HexPrefix _prefix, HexCase _case)
 {
 	std::ostringstream ret;
