@@ -60,6 +60,16 @@ std::string toHex(T const& _data, int _w = 2, HexPrefix _prefix = HexPrefix::Don
 	return (_prefix == HexPrefix::Add) ? "0x" + ret.str() : ret.str();
 }
 
+enum class HexCase
+{
+	Lower = 0,
+	Upper = 1,
+	Mixed = 2,
+};
+
+/// Convert a series of bytes to the corresponding string of hex duplets,
+/// optionally with "0x" prefix and with uppercase hex letters.
+std::string toHex(bytes const& _data, HexPrefix _prefix = HexPrefix::DontAdd, HexCase _case = HexCase::Lower);
 /// Converts a (printable) ASCII hex character into the correspnding integer value.
 /// @example fromHex('A') == 10 && fromHex('f') == 15 && fromHex('5') == 5
 int fromHex(char _i, WhenError _throw);
@@ -229,13 +239,15 @@ bool contains(T const& _t, V const& _v)
 	return std::end(_t) != std::find(std::begin(_t), std::end(_t), _v);
 }
 
-/// @returns true iff @a _str passess the hex address checksum test.
-/// @param _strict if false, hex strings with only uppercase or only lowercase letters
-/// are considered valid.
-bool passesAddressChecksum(std::string const& _str, bool _strict);
 
-/// @returns the checksummed version of an address
-/// @param hex strings that look like an address
-std::string getChecksummedAddress(std::string const& _addr);
+/// @returns true iff @a _str passess the bech32 address checksum test.
+bool passesAddressChecksum(std::string const& _str);
+
+
+/** Decode a Bech32 string. Returns (hrp, data). Empty hrp means failure. */
+std::pair<std::string, bytes> bech32decode(const std::string& str);
+
+/** Decode a bech32 address. return witprog. */
+bytes decodeAddress(const std::string& hrp, const std::string& addr);
 
 }
