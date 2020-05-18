@@ -2297,16 +2297,19 @@ void TypeChecker::endVisit(Literal const& _literal)
 
 	if (_literal.looksLikeAddress())
 	{
-		if (_literal.passesAddressChecksum())
+		string msg;
+		if (dev::passesAddressChecksum(_literal.value()))
+		{
 			_literal.annotation().type = make_shared<IntegerType>(160, IntegerType::Modifier::Address);
+		}
 		else
-			m_errorReporter.warning(
+		{
+			msg = "This looks like an address but has an invalid checksum, If this is not used as an address, please prepend '00'.";
+			m_errorReporter.syntaxError(
 				_literal.location(),
-				"This looks like an address but has an invalid checksum. "
-				"If this is not used as an address, please prepend '00'. " +
-				(!_literal.getChecksummedAddress().empty() ? "Correct checksummed address: '" + _literal.getChecksummedAddress() + "'. " : "") +
-				"For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals"
+				msg + "For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals"
 			);
+		}			
 	}
 
 	if (_literal.isHexNumber() && _literal.subDenomination() != Literal::SubDenomination::None)
