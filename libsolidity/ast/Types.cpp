@@ -753,10 +753,10 @@ bool RationalNumberType::isImplicitlyConvertibleTo(Type const& _convertTo) const
 		unsigned forSignBit = (targetType.isSigned() ? 1 : 0);
 		if (m_value > rational(0))
 		{
-			if (m_value.numerator() <= (u256(-1) >> (256 - targetType->numBits() + forSignBit)))
+			if (m_value.numerator() <= (u256(-1) >> (256 - targetType.numBits() + forSignBit)))
 				return true;
 		}
-		else if (targetType->isSigned() && -m_value.numerator() <= (u256(1) << (targetType->numBits() - forSignBit)))
+		else if (targetType.isSigned() && -m_value.numerator() <= (u256(1) << (targetType.numBits() - forSignBit)))
 			return true;
 		return false;
 	}
