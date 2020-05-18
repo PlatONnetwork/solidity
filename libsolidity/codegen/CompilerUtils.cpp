@@ -656,6 +656,7 @@ void CompilerUtils::convertType(
 	Type::Category stackTypeCategory = _typeOnStack.category();
 	Type::Category targetTypeCategory = _targetType.category();
 
+
 	bool enumOverflowCheckPending = (targetTypeCategory == Type::Category::Enum || stackTypeCategory == Type::Category::Enum);
 	bool chopSignBitsPending = _chopSignBits && targetTypeCategory == Type::Category::Integer;
 	if (chopSignBitsPending)
@@ -663,7 +664,6 @@ void CompilerUtils::convertType(
 		const IntegerType& targetIntegerType = dynamic_cast<const IntegerType &>(_targetType);
 		chopSignBitsPending = targetIntegerType.isSigned();
 	}
-
 	switch (stackTypeCategory)
 	{
 	case Type::Category::FixedBytes:
@@ -816,7 +816,7 @@ void CompilerUtils::convertType(
 			solAssert(
 				false,
 				"Invalid conversion from string literal to " + _targetType.toString(false) + " requested."
-			);
+	    	);
 		break;
 	}
 	case Type::Category::Array:

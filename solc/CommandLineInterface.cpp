@@ -485,10 +485,15 @@ bool CommandLineInterface::parseLibraryOption(string const& _input)
 			string addrString(lib.begin() + colon + 1, lib.end());
 			boost::trim(libName);
 			boost::trim(addrString);
-
+			if (addrString.empty())
+			{
+				cerr << "Empty address provided for library \"" << libName << "\": " << endl;
+				cerr << "Note that there should not be any whitespace after the colon." << endl;
+				return false;
+			}
 			if (!passesAddressChecksum(addrString))
 			{
-				serr() << "Invalid checksum on address for library \"" << libName << "\": " << addrString << endl;
+				cerr << "Invalid checksum on address for library \"" << libName << "\": " << addrString << endl;
 				return false;
 			}
 			bytes binAddr = fromHex(addrString);

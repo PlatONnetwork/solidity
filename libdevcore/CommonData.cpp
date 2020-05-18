@@ -29,6 +29,26 @@
 using namespace std;
 using namespace dev;
 
+string dev::toHex(bytes const& _data, HexPrefix _prefix, HexCase _case)
+{
+	std::ostringstream ret;
+	if (_prefix == HexPrefix::Add)
+		ret << "0x";
+
+	int rix = _data.size() - 1;
+	for (uint8_t c: _data)
+	{
+		auto hexcase = std::nouppercase;
+		if (_case == HexCase::Upper)
+			hexcase = std::uppercase;
+		else if (_case == HexCase::Mixed)
+			hexcase = (rix-- & 2) == 0 ? std::nouppercase : std::uppercase;
+
+		ret << std::hex << hexcase << std::setfill('0') << std::setw(2) << size_t(c);
+	}
+	return ret.str();
+}
+
 int dev::fromHex(char _i, WhenError _throw)
 {
 	if (_i >= '0' && _i <= '9')
@@ -76,9 +96,6 @@ bytes dev::fromHex(std::string const& _s, WhenError _throw)
 
 bool dev::passesAddressChecksum(string const& _str)
 {
-	if (_str.length() != 42)
-		return false;
-
 	pair<string,bytes> ret = bech32decode(boost::erase_all_copy(_str, "_"));
 	string hrp = ret.first;
 	if (hrp != "lat" && hrp != "lax") {
@@ -88,28 +105,6 @@ bool dev::passesAddressChecksum(string const& _str)
 	return true;
 }
 
-bool dev::isValidHex(string const& _string)
-{
-	if (_string.substr(0, 2) != "0x")
-		return false;
-	if (_string.find_first_not_of("0123456789abcdefABCDEF", 2) != string::npos)
-		return false;
-	return true;
-}
-
-bool dev::isValidDecimal(string const& _string)
-{
-	if (_string.empty())
-		return false;
-	if (_string == "0")
-		return true;
-	// No leading zeros
-	if (_string.front() == '0')
-		return false;
-	if (_string.find_first_not_of("0123456789") != string::npos)
-		return false;
-	return true;
-}
 
 /** The Bech32 character set for encoding. */
 const char* charset = "qpzry9x8gf2tvdw0s3jn54khce6mua7l";
@@ -252,4 +247,3 @@ bytes dev::decodeAddress(const std::string& hrp, const std::string& addr) {
     return output;
 }
 
->>>>>>> 6afde4638... resolve conflicting files

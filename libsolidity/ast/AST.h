@@ -1662,10 +1662,8 @@ public:
 	/// @returns true if this is a number with a hex prefix.
 	bool isHexNumber() const;
 
-	/// @returns true if this looks like a checksummed address.
+	/// @returns true if this looks like a bech32 address.
 	bool looksLikeAddress() const;
-	/// @returns true if it passes the address checksum test.
-	bool passesAddressChecksum() const;
 
 private:
 	Token::Value m_token;

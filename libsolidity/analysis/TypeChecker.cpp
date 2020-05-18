@@ -1269,7 +1269,6 @@ bool TypeChecker::visit(VariableDeclarationStatement const& _statement)
 					". This is probably not desired. Use an explicit type to silence this warning."
 				);
 			}
-
 			var.accept(*this);
 		}
 		else
@@ -2317,25 +2316,19 @@ void TypeChecker::endVisit(Literal const& _literal)
 
 	if (_literal.looksLikeAddress())
 	{
-		// Assign type here if it even looks like an address. This prevents double errors for invalid addresses
-		_literal.annotation().type = make_shared<AddressType>(StateMutability::Payable);
-
 		string msg;
-		if (_literal.valueWithoutUnderscores().length() != 42) // must 42 length
-			msg =
-				"This looks like an address but is not exactly bech32 fmt.";
-		else if (!_literal.passesAddressChecksum())
+		if (dev::passesAddressChecksum(_literal.value()))
 		{
-			msg = "This looks like an address but has an invalid checksum.";
+			_literal.annotation().type = make_shared<IntegerType>(160, IntegerType::Modifier::Address);
 		}
-
-		if (!msg.empty())
+		else
+		{
+			msg = "This looks like an address but has an invalid checksum, If this is not used as an address, please prepend '00'.";
 			m_errorReporter.syntaxError(
 				_literal.location(),
-				msg +
-				" If this is not used as an address, please prepend '00'. " +
-				"For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals"
+				msg + "For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals"
 			);
+		}			
 	}
 
 	if (_literal.isHexNumber() && _literal.subDenomination() != Literal::SubDenomination::None)
@@ -2370,7 +2363,6 @@ void TypeChecker::endVisit(Literal const& _literal)
 
 	if (!_literal.annotation().type)
 		_literal.annotation().type = Type::forLiteral(_literal);
-
 	if (!_literal.annotation().type)
 		m_errorReporter.fatalTypeError(_literal.location(), "Invalid literal value.");
 
@@ -2408,13 +2400,17 @@ Declaration const& TypeChecker::dereference(UserDefinedTypeName const& _typeName
 void TypeChecker::expectType(Expression const& _expression, Type const& _expectedType)
 {
 	_expression.accept(*this);
-	if (!type(_expression)->isImplicitlyConvertibleTo(_expectedType))
+	auto expressionType = type(_expression);
+	auto expressionCategory = expressionType->category();
+
+	if (!expressionType->isImplicitlyConvertibleTo(_expectedType))
 	{
 		if (
-			type(_expression)->category() == Type::Category::RationalNumber &&
-			dynamic_pointer_cast<RationalNumberType const>(type(_expression))->isFractional() &&
-			type(_expression)->mobileType()
+			expressionCategory == Type::Category::RationalNumber &&
+			dynamic_pointer_cast<RationalNumberType const>(expressionType)->isFractional() &&
+			expressionType->mobileType()
 		)
+		{
 			m_errorReporter.typeError(
 				_expression.location(),
 				"Type " +
@@ -2425,6 +2421,7 @@ void TypeChecker::expectType(Expression const& _expression, Type const& _expecte
 				type(_expression)->mobileType()->toString() +
 				" or use an explicit conversion."
 			);
+		}
 		else
 			m_errorReporter.typeError(
 				_expression.location(),
@@ -2437,12 +2434,11 @@ void TypeChecker::expectType(Expression const& _expression, Type const& _expecte
 	}
 
 	if (
-		type(_expression)->category() == Type::Category::RationalNumber &&
+		expressionCategory == Type::Category::RationalNumber &&
 		_expectedType.category() == Type::Category::FixedBytes
 	)
 	{
 		auto literal = dynamic_cast<Literal const*>(&_expression);
-
 		if (literal && !literal->isHexNumber())
 			m_errorReporter.warning(
 				_expression.location(),

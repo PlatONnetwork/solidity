@@ -589,28 +589,11 @@ bool Literal::looksLikeAddress() const
 	if (subDenomination() != SubDenomination::None)
 		return false;
 
-	pair<string, bytes> ret = bech32decode(valueWithoutUnderscores());
-
-	string hrp = ret.first;
-	
-	if (hrp.empty() || (hrp != "lat" && hrp != "lax")) {
-        return false;
-    }
-
-	return true;
+	string realValue = boost::erase_all_copy(value(), "_");
+	bool isAddPrefix = boost::starts_with(realValue, "lat") || boost::starts_with(realValue, "lax");
+	return isAddPrefix && realValue.length() == 42;	
 }
 
-bool Literal::passesAddressChecksum() const
-{
-	solAssert(isHexNumber(), "Expected hex number");
-	return dev::passesAddressChecksum(value());
-}
-
-
-bool Literal::passesAddressChecksum() const
-{
-	return dev::passesAddressChecksum(valueWithoutUnderscores());
-}
 
 /** Convert from one power-of-2 number base to another. */
 template<int frombits, int tobits, bool pad>
