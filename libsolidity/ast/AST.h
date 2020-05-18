@@ -1616,6 +1616,7 @@ public:
 
 	/// @returns true if this looks like a checksummed address.
 	bool looksLikeAddress() const;
+
 	/// @returns true if it passes the address checksum test.
 	bool passesAddressChecksum() const;
 
