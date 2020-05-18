@@ -838,6 +838,7 @@ void CompilerUtils::convertType(
 				? dynamic_cast<IntegerType const&>(_targetType) : addressType;
 			if (stackTypeCategory == Type::Category::RationalNumber)
 			{
+				solAssert(targetTypeCategory != Type::Category::Address, "Conversion from rational numbers to address types is not supported");
 				RationalNumberType const& constType = dynamic_cast<RationalNumberType const&>(_typeOnStack);
 				// We know that the stack is clean, we only have to clean for a narrowing conversion
 				// where cleanup is forced.

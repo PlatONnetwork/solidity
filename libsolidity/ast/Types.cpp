@@ -886,6 +886,8 @@ BoolResult RationalNumberType::isImplicitlyConvertibleTo(Type const& _convertTo)
 		if (isFractional())
 			return false;
 		IntegerType const& targetType = dynamic_cast<IntegerType const&>(_convertTo);
+		if(targetType.category() == Type::Category::Address)
+			return false;
 		return fitsIntegerType(m_value.numerator(), targetType);
 	}
 	case Category::FixedPoint:
