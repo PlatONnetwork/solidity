@@ -36,6 +36,7 @@
 #include <boost/range/algorithm/copy.hpp>
 #include <boost/range/adaptor/sliced.hpp>
 #include <boost/range/adaptor/transformed.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include <limits>
 
@@ -426,8 +427,12 @@ u256 IntegerType::literalValue(Literal const* _literal) const
 {
 	solAssert(m_modifier == Modifier::Address, "");
 	solAssert(_literal, "");
-	solAssert(_literal->value().substr(0, 2) == "0x", "");
-	return u256(_literal->value());
+	string hrp = _literal->value().substr(0, 3);
+	solAssert((hrp == "lat" || hrp == "lax"), "This is not a bech32 address");
+	bytes r = dev::decodeAddress(hrp, boost::erase_all_copy(_literal->value(), "_"));
+	solAssert(r.size() == 20, "decodeAddress failed");
+	
+	return u256(toHex(r, HexPrefix::Add));
 }
 
 bigint IntegerType::minValue() const
@@ -756,12 +761,14 @@ bool RationalNumberType::isImplicitlyConvertibleTo(Type const& _convertTo) const
 {
 	if (_convertTo.category() == Category::Integer)
 	{
+		IntegerType const& targetType = dynamic_cast<IntegerType const&>(_convertTo);
+		if(targetType.isAddress())
+			return false;
 		if (m_value == rational(0))
 			return true;
 		if (isFractional())
 			return false;
-		IntegerType const& targetType = dynamic_cast<IntegerType const&>(_convertTo);
-		int forSignBit = (targetType.isSigned() ? 1 : 0);
+		unsigned forSignBit = (targetType.isSigned() ? 1 : 0);
 		if (m_value > rational(0))
 		{
 			if (m_value.numerator() <= (u256(-1) >> (256 - targetType.numBits() + forSignBit)))
@@ -795,6 +802,12 @@ bool RationalNumberType::isImplicitlyConvertibleTo(Type const& _convertTo) const
 
 bool RationalNumberType::isExplicitlyConvertibleTo(Type const& _convertTo) const
 {
+	if (_convertTo.category() == Category::Integer)
+	{
+		IntegerType const& targetType = dynamic_cast<IntegerType const&>(_convertTo);
+		if(targetType.isAddress())
+			return false;
+	}
 	TypePointer mobType = mobileType();
 	return mobType && mobType->isExplicitlyConvertibleTo(_convertTo);
 }
@@ -1077,6 +1090,10 @@ StringLiteralType::StringLiteralType(Literal const& _literal):
 
 bool StringLiteralType::isImplicitlyConvertibleTo(Type const& _convertTo) const
 {
+	Type::Category typeTo = _convertTo.category();
+	bool passChecksum = dev::passesAddressChecksum(boost::erase_all_copy(m_value, "_"));
+	if(Type::Category::Integer == typeTo && passChecksum)
+		return true;
 	if (auto fixedBytes = dynamic_cast<FixedBytesType const*>(&_convertTo))
 		return size_t(fixedBytes->numBytes()) >= m_value.size();
 	else if (auto arrayType = dynamic_cast<ArrayType const*>(&_convertTo))
