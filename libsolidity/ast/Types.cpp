@@ -969,6 +969,8 @@ bool RationalNumberType::isImplicitlyConvertibleTo(Type const& _convertTo) const
 		if (isFractional())
 			return false;
 		IntegerType const& targetType = dynamic_cast<IntegerType const&>(_convertTo);
+		if(targetType.category() == Type::Category::Address)
+			return false;
 		if (m_value == rational(0))
 			return true;
 		unsigned forSignBit = (targetType.isSigned() ? 1 : 0);
