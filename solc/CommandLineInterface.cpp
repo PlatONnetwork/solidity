@@ -570,7 +570,13 @@ bool CommandLineInterface::parseLibraryOption(string const& _input)
 				serr() << "Invalid checksum on address for library \"" << libName << "\": " << addrString << endl;
 				return false;
 			}
-			bytes binAddr = fromHex(addrString);
+			
+			pair<string,bytes> bech32 = bech32decode(boost::erase_all_copy(addrString, "_"));
+			string hrp = bech32.first;
+			if (hrp != "lat" && hrp != "lax") {
+				return false;
+			}
+			bytes binAddr = bech32.second;			
 			h160 address(binAddr, h160::AlignRight);
 			if (binAddr.size() > 20 || address == h160())
 			{
