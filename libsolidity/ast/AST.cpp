@@ -571,7 +571,9 @@ bool Literal::looksLikeAddress() const
 {
 	if (subDenomination() != SubDenomination::None)
 		return false;
-	return value().length() == 42;
+	string realValue = boost::erase_all_copy(value(), "_");
+	bool rightPrefix = boost::starts_with(realValue, "lat") || boost::starts_with(realValue, "lax");
+	return rightPrefix && realValue.length() == 42;
 }
 
 
