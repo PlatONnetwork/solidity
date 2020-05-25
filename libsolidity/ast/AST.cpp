@@ -571,11 +571,7 @@ bool Literal::looksLikeAddress() const
 {
 	if (subDenomination() != SubDenomination::None)
 		return false;
-
-	if (!isHexNumber())
-		return false;
-
-	return abs(int(value().length()) - 42) <= 1;
+	return value().length() == 42;
 }
 
 
