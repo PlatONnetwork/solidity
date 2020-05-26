@@ -4,4 +4,3 @@ contract C {
 	uint constant c = 2 szabo / 1 seconds + 3 finney * 3 hours;
 }
 // ----
-// Warning: (142-149): Using "years" as a unit denomination is deprecated.

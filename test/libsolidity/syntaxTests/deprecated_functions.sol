@@ -4,9 +4,9 @@ contract test {
 		x;
 	}
 	function g() public {
-		suicide(1);
+		suicide('lax1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpxxvxfq');
 	}
 }
 // ----
 // Warning: (58-64): "sha3" has been deprecated in favour of "keccak256"
-// Warning: (99-109): "suicide" has been deprecated in favour of "selfdestruct"
+// Warning: (99-152): "suicide" has been deprecated in favour of "selfdestruct"

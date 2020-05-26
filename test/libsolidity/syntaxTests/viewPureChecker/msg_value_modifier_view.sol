@@ -3,4 +3,4 @@ contract C {
     function f() m(1 lat, msg.value) public view {}
 }
 // ----
-// TypeError: (116-125): "msg.value" and "callvalue()" can only be used in payable public functions. Make the function "payable" or use an internal function to avoid this error.
+// Warning: (116-125): "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
