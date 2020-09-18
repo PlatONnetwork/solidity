@@ -52,6 +52,6 @@ contract MyConc{
 }
 // ----
 // Warning: (773-792): This declaration shadows an existing declaration.
-// Warning: (1009-1086): Function state mutability can be restricted to view
-// Warning: (985-1002): Underflow (resulting value less than 0) happens here.
-// Warning: (985-1002): Overflow (resulting value larger than 2**256 - 1) happens here.
+// TypeError: (89-131): Type int_const 1284...(41 digits omitted)...1449 is not implicitly convertible to expected type address.
+// TypeError: (171-213): Type int_const 1101...(41 digits omitted)...7097 is not implicitly convertible to expected type address.
+// TypeError: (535-577): Type int_const 8769...(40 digits omitted)...7422 is not implicitly convertible to expected type address.
