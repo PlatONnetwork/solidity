@@ -262,7 +262,7 @@ BOOST_AUTO_TEST_CASE(int_with_lat_lat_subdenomination)
 	char const* sourceCode = R"(
 		contract test {
 			constructor() {
-				 uint x = 1 lat;
+				 uint x = 1 atp;
 			}
 		}
 	)";

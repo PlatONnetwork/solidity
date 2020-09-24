@@ -1,3 +1,3 @@
 contract c {
-    modifier mod { if (msg.sender == 'lat1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq542u6a') _; }
+    modifier mod { if (msg.sender == 'atp1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqdruy9j') _; }
 }

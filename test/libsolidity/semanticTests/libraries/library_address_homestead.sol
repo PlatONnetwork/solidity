@@ -5,7 +5,7 @@ library L {
 }
 contract C {
     function addr() public view returns (bool) {
-        return address(L) == address('lax1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmscn5j');
+        return address(L) == address('atx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq89qwkc');
     }
     function g(uint256 a, uint256 b) public returns (bool) {
         (bool success,) = address(L).delegatecall(abi.encodeWithSignature("f(uint256,uint256)", a, b));

@@ -298,7 +298,7 @@ BOOST_AUTO_TEST_CASE(call_comments)
 BOOST_AUTO_TEST_CASE(call_arguments)
 {
 	char const* source = R"(
-		// f(uint256), 314 lat: 5 # optional lat value #
+		// f(uint256), 314 atp: 5 # optional atp value #
 		// -> 4
 	)";
 	auto const calls = parse(source);
@@ -311,7 +311,7 @@ BOOST_AUTO_TEST_CASE(call_arguments)
 		fmt::encodeArgs(5),
 		fmt::encodeArgs(4),
 		314,
-		" optional lat value "
+		" optional atp value "
 	);
 }
 
@@ -597,7 +597,7 @@ BOOST_AUTO_TEST_CASE(call_multiple_arguments)
 BOOST_AUTO_TEST_CASE(call_multiple_arguments_mixed_format)
 {
 	char const* source = R"(
-		// test(uint256, uint256), 314 lat:
+		// test(uint256, uint256), 314 atp:
 		// 1, -2
 		// -> -1, 2
 	)";
@@ -816,7 +816,7 @@ BOOST_AUTO_TEST_CASE(call_lat_value_invalid)
 BOOST_AUTO_TEST_CASE(call_lat_value_invalid_decimal)
 {
 	char const* source = R"(
-		// sig(): 0.1hd lat ->
+		// sig(): 0.1hd atp ->
 	)";
 	BOOST_REQUIRE_THROW(parse(source), langutil::Error);
 }

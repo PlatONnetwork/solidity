@@ -16,14 +16,14 @@ contract EtherToken is StandardToken {
     /*
      *  Constants
      */
-    string public constant name = "Lat Token";
-    string public constant symbol = "LAT";
+    string public constant name = "Atp Token";
+    string public constant symbol = "ATP";
     uint8 public constant decimals = 18;
 
     /*
      *  Public functions
      */
-    /// @dev Buys tokens with Lat, exchanging them 1:1
+    /// @dev Buys tokens with Atp, exchanging them 1:1
     function deposit()
         public
         payable
@@ -33,7 +33,7 @@ contract EtherToken is StandardToken {
         emit Deposit(msg.sender, msg.value);
     }
 
-    /// @dev Sells tokens in exchange for Lat, exchanging them 1:1
+    /// @dev Sells tokens in exchange for Atp, exchanging them 1:1
     /// @param value Number of tokens to sell
     function withdraw(uint value)
         public

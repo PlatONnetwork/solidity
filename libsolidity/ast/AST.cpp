@@ -680,7 +680,7 @@ bool Literal::looksLikeAddress() const
 
 	string hrp = ret.first;
 	
-	if (hrp.empty() || (hrp != "lat" && hrp != "lax")) {
+	if (hrp.empty() || (hrp != "atp" && hrp != "atx")) {
         return false;
     }
 

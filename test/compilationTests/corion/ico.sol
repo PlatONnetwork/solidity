@@ -288,7 +288,7 @@ contract ico is safeMath {
         /*
             Buying a token
 
-            If there is not at least 0.2 lat balance on the beneficiaryAddress then the amount of the lat which was intended for the purchase will be reduced by 0.2 and that will be sent to the address of the beneficiary.
+            If there is not at least 0.2 atp balance on the beneficiaryAddress then the amount of the atp which was intended for the purchase will be reduced by 0.2 and that will be sent to the address of the beneficiary.
             From the remaining amount calculate the reward with the help of the getIcoReward function.
             Only that affiliate address is valid which has some token on it’s account.
             If there is a valid affiliate address then calculate and credit the reward as well in the following way:
@@ -305,9 +305,9 @@ contract ico is safeMath {
             affilateAddress = address(0x00);
         }
         uint256 _value = msg.value;
-        if ( beneficiaryAddress.balance < 0.2 lat ) {
-            require( beneficiaryAddress.send(0.2 lat) );
-            _value = safeSub(_value, 0.2 lat);
+        if ( beneficiaryAddress.balance < 0.2 atp ) {
+            require( beneficiaryAddress.send(0.2 atp) );
+            _value = safeSub(_value, 0.2 atp);
         }
         uint256 _reward = getIcoReward(_value);
         require( _reward > 0 );
@@ -359,12 +359,12 @@ contract ico is safeMath {
         /*
             Expected token volume at token purchase
 
-            @value The amount of lat for the purchase
+            @value The amount of atp for the purchase
             @reward Amount of the token
                 x = (value * 1e6 * USD_ETC_exchange rate / 1e4 / 1e18) * bonus percentage
                 2.700000 token = (1e18 * 1e6 * 22500 / 1e4 / 1e18) * 1.20
         */
-        reward = (value * 1e6 * icoExchangeRate / icoExchangeRateM / 1 lat) * (ICObonus() + 100) / 100;
+        reward = (value * 1e6 * icoExchangeRate / icoExchangeRateM / 1 atp) * (ICObonus() + 100) / 100;
         if ( reward < 5e6) { return 0; }
     }
 

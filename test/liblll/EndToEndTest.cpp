@@ -974,7 +974,7 @@ BOOST_AUTO_TEST_CASE(von_szabo_finney_lat)
 {
 	char const* sourceCode = R"(
 		(returnlll
-			(return (+ von (+ szabo (+ finney lat)))))
+			(return (+ von (+ szabo (+ finney atp)))))
 	)";
 	compileAndRun(sourceCode);
 	BOOST_CHECK(callFallback() == encodeArgs(u256(1001001000000000001)));

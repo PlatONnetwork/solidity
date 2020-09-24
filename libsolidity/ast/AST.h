@@ -1682,7 +1682,7 @@ public:
 		Von = static_cast<int>(Token::SubVon),
 		Szabo = static_cast<int>(Token::SubSzabo),
 		Finney = static_cast<int>(Token::SubFinney),
-		Lat = static_cast<int>(Token::SubLat),
+		Atp = static_cast<int>(Token::SubAtp),
 		Second = static_cast<int>(Token::SubSecond),
 		Minute = static_cast<int>(Token::SubMinute),
 		Hour = static_cast<int>(Token::SubHour),

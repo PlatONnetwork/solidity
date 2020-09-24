@@ -3,7 +3,7 @@ contract C {
     bytes2 constant b = 0xabcd;
     bytes3 constant c = "abc";
     bool constant d = true;
-    address payable constant e = 'lat1zgfpyysjzgfpyysjzgfpyysjzgfpyysjh0myye';
+    address payable constant e = 'atp1zgfpyysjzgfpyysjzgfpyysjzgfpyysjwedumk';
     function f() public pure returns (uint w, bytes2 x, bytes3 y, bool z, address t) {
         assembly {
             w := a

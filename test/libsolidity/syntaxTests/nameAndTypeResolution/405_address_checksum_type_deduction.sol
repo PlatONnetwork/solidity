@@ -1,6 +1,6 @@
 contract C {
     function f() public {
-        ('lat1lg9le9lys3vyjnxds4lp4pwuj8mlqprw2zm4tn').transfer(2);
+        ('atp1lg9le9lys3vyjnxds4lp4pwuj8mlqprwn5dd5u').transfer(2);
     }
 }
 // ----

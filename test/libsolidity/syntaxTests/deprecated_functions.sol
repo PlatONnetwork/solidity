@@ -4,7 +4,7 @@ contract test {
 		x;
 	}
 	function g() public {
-		suicide('lat1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpfr7f80');
+		suicide('atp1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqps4g3cq');
 	}
 }
 // ----

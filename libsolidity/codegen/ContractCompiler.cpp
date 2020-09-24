@@ -120,7 +120,7 @@ void ContractCompiler::initializeContext(
 
 void ContractCompiler::appendCallValueCheck()
 {
-	// Throw if function is not payable but call contained lat.
+	// Throw if function is not payable but call contained atp.
 	m_context << Instruction::CALLVALUE;
 	// TODO: error message?
 	m_context.appendConditionalRevert();

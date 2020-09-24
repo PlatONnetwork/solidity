@@ -588,7 +588,7 @@ bool CommandLineInterface::parseLibraryOption(string const& _input)
 			
 			pair<string,bytes> bech32 = bech32decode(boost::erase_all_copy(addrString, "_"));
 			string hrp = bech32.first;
-			if (hrp != "lat" && hrp != "lax") {
+			if (hrp != "atp" && hrp != "atx") {
 				return false;
 			}
 			bytes binAddr = bech32.second;			
