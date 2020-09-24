@@ -42,12 +42,12 @@ namespace test
  * - Function calls defined in blocks:
  * // f(uint256, uint256): 1, 1 # Signature and comma-separated list of arguments #
  * // -> 1, 1                   # Expected result value #
- * // g(), 2 ether              # (Optional) Ether to be send with the call #
+ * // g(), 2 lat              # (Optional) Lat to be send with the call #
  * // -> 2, 3
- * // h(uint256), 1 ether: 42
+ * // h(uint256), 1 lat: 42
  * // -> FAILURE                # If REVERT or other EVM failure was detected #
  * // ()                        # Call fallback function #
- * // (), 1 ether               # Call ether function #
+ * // (), 1 lat               # Call lat function #
  * ...
  */
 class TestFileParser
@@ -135,7 +135,7 @@ private:
 	/// empty. If so, the signature is not allowed to define any parameters.
 	std::pair<std::string, bool> parseFunctionSignature();
 
-	/// Parses the optional ether value that can be passed alongside the
+	/// Parses the optional lat value that can be passed alongside the
 	/// function call arguments. Throws an InvalidEtherValueEncoding exception
 	/// if given value cannot be converted to `u256`.
 	u256 parseFunctionCallValue();

@@ -83,7 +83,7 @@ contract moduleHandler is multiOwner, announcementTypes {
     }
     function getModuleAddressByName(string memory name) public view returns( bool success, bool found, address addr ) {
         /*
-            Search by name for module. The result is an Ethereum address.
+            Search by name for module. The result is an Alaya address.
 
             @name       Name of module.
             @addr       Address of module.
@@ -127,7 +127,7 @@ contract moduleHandler is multiOwner, announcementTypes {
     }
     function getModuleIDByAddress(address addr) public view returns( bool success, bool found, uint256 id ) {
         /*
-            Search by ethereum address for module. The result is an index array.
+            Search by alaya address for module. The result is an index array.
 
             @name       Name of module.
             @id         Index of module.

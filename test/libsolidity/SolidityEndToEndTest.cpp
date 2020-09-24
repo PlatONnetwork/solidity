@@ -1201,7 +1201,7 @@ BOOST_AUTO_TEST_CASE(now)
 	)
 }
 
-BOOST_AUTO_TEST_CASE(send_ether)
+BOOST_AUTO_TEST_CASE(send_lat)
 {
 	char const* sourceCode = R"(
 		contract test {
@@ -1219,7 +1219,7 @@ BOOST_AUTO_TEST_CASE(send_ether)
 	BOOST_CHECK_EQUAL(balanceAt(address), amount);
 }
 
-BOOST_AUTO_TEST_CASE(transfer_ether)
+BOOST_AUTO_TEST_CASE(transfer_lat)
 {
 	char const* sourceCode = R"(
 		contract A {
@@ -1901,7 +1901,7 @@ BOOST_AUTO_TEST_CASE(contracts_as_addresses)
 {
 	char const* sourceCode = R"(
 		contract helper {
-			function() external payable { } // can receive ether
+			function() external payable { } // can receive lat
 		}
 		contract test {
 			helper h;
@@ -6216,9 +6216,9 @@ BOOST_AUTO_TEST_CASE(failing_send)
 	BOOST_REQUIRE(callContractFunction("callHelper(address)", c_helperAddress) == encodeArgs(true, 20));
 }
 
-BOOST_AUTO_TEST_CASE(send_zero_ether)
+BOOST_AUTO_TEST_CASE(send_zero_lat)
 {
-	// Sending zero ether to a contract should still invoke the fallback function
+	// Sending zero lat to a contract should still invoke the fallback function
 	// (it previously did not because the gas stipend was not provided by the EVM)
 	char const* sourceCode = R"(
 		contract Receiver {
@@ -8788,7 +8788,7 @@ BOOST_AUTO_TEST_CASE(contract_binary_dependencies)
 	compileAndRun(sourceCode);
 }
 
-BOOST_AUTO_TEST_CASE(reject_ether_sent_to_library)
+BOOST_AUTO_TEST_CASE(reject_lat_sent_to_library)
 {
 	char const* sourceCode = R"(
 		library lib {}
@@ -10587,7 +10587,7 @@ BOOST_AUTO_TEST_CASE(no_nonpayable_circumvention_by_modifier)
 	char const* sourceCode = R"(
 		contract C {
 			modifier tryCircumvent {
-				if (false) _; // avoid the function, we should still not accept ether
+				if (false) _; // avoid the function, we should still not accept lat
 			}
 			function f() tryCircumvent public returns (uint) {
 				return msgvalue();
@@ -12445,10 +12445,10 @@ BOOST_AUTO_TEST_CASE(scientific_notation)
 	char const* sourceCode = R"(
 		contract C {
 			function f() public returns (uint) {
-				return 2e10 wei;
+				return 2e10 von;
 			}
 			function g() public returns (uint) {
-				return 200e-2 wei;
+				return 200e-2 von;
 			}
 			function h() public returns (uint) {
 				return 2.5e1;

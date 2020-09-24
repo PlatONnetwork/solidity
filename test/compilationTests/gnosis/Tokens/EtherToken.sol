@@ -2,7 +2,7 @@ pragma solidity >=0.0;
 import "../Tokens/StandardToken.sol";
 
 
-/// @title Token contract - Token exchanging Ether 1:1
+/// @title Token contract - Token exchanging Lat 1:1
 /// @author Stefan George - <stefan@gnosis.pm>
 contract EtherToken is StandardToken {
     using Math for *;
@@ -16,14 +16,14 @@ contract EtherToken is StandardToken {
     /*
      *  Constants
      */
-    string public constant name = "Ether Token";
-    string public constant symbol = "ETH";
+    string public constant name = "Lat Token";
+    string public constant symbol = "LAT";
     uint8 public constant decimals = 18;
 
     /*
      *  Public functions
      */
-    /// @dev Buys tokens with Ether, exchanging them 1:1
+    /// @dev Buys tokens with Lat, exchanging them 1:1
     function deposit()
         public
         payable
@@ -33,7 +33,7 @@ contract EtherToken is StandardToken {
         emit Deposit(msg.sender, msg.value);
     }
 
-    /// @dev Sells tokens in exchange for Ether, exchanging them 1:1
+    /// @dev Sells tokens in exchange for Lat, exchanging them 1:1
     /// @param value Number of tokens to sell
     function withdraw(uint value)
         public
