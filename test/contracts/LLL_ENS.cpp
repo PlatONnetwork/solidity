@@ -478,9 +478,9 @@ BOOST_AUTO_TEST_CASE(create_subnode_fail)
 {
 	deployEns();
 
-	// Send account(1) some ether for gas.
-	sendEther(account(1), 1000 * ether);
-	BOOST_REQUIRE(balanceAt(account(1)) >= 1000 * ether);
+	// Send account(1) some lat for gas.
+	sendEther(account(1), 1000 * lat);
+	BOOST_REQUIRE(balanceAt(account(1)) >= 1000 * lat);
 
 	// account(1) tries to set ownership of the "eth" sub-node.
 	m_sender = account(1);

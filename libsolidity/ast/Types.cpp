@@ -828,7 +828,7 @@ tuple<bool, rational> RationalNumberType::isValidLiteral(Literal const& _literal
 	switch (_literal.subDenomination())
 	{
 		case Literal::SubDenomination::None:
-		case Literal::SubDenomination::Wei:
+		case Literal::SubDenomination::Von:
 		case Literal::SubDenomination::Second:
 			break;
 		case Literal::SubDenomination::Szabo:
@@ -837,7 +837,7 @@ tuple<bool, rational> RationalNumberType::isValidLiteral(Literal const& _literal
 		case Literal::SubDenomination::Finney:
 			value *= bigint("1000000000000000");
 			break;
-		case Literal::SubDenomination::Ether:
+		case Literal::SubDenomination::Lat:
 			value *= bigint("1000000000000000000");
 			break;
 		case Literal::SubDenomination::Minute:

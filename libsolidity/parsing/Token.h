@@ -180,11 +180,11 @@ namespace solidity
 	K(View, "view", 0)                                                 \
 	K(While, "while", 0)                                               \
 	\
-	/* Ether subdenominations */                                       \
-	K(SubWei, "von", 0)                                                \
+	/* Lat subdenominations */                                       \
+	K(SubVon, "von", 0)                                                \
 	K(SubSzabo, "szabo", 0)                                            \
 	K(SubFinney, "finney", 0)                                          \
-	K(SubEther, "lat", 0)                                            \
+	K(SubLat, "lat", 0)                                            \
 	K(SubSecond, "seconds", 0)                                         \
 	K(SubMinute, "minutes", 0)                                         \
 	K(SubHour, "hours", 0)                                             \
@@ -291,7 +291,7 @@ public:
 	static bool isVariableVisibilitySpecifier(Value op) { return op == Public || op == Private || op == Internal; }
 	static bool isLocationSpecifier(Value op) { return op == Memory || op == Storage; }
 	static bool isStateMutabilitySpecifier(Value op) { return op == Pure || op == Constant || op == View || op == Payable; }
-	static bool isEtherSubdenomination(Value op) { return op == SubWei || op == SubSzabo || op == SubFinney || op == SubEther; }
+	static bool isEtherSubdenomination(Value op) { return op == SubVon || op == SubSzabo || op == SubFinney || op == SubLat; }
 	static bool isTimeSubdenomination(Value op) { return op == SubSecond || op == SubMinute || op == SubHour || op == SubDay || op == SubWeek || op == SubYear; }
 	static bool isReservedKeyword(Value op) { return (Abstract <= op && op <= TypeOf); }
 
