@@ -7,15 +7,15 @@ contract C
     function f(uint x) public {
         if (x == 0)
         {
-            a = 'lat1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqgqhtfnsy';
+            a = 'atp1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqgqwalt0t';
             b = true;
         }
         else
         {
-            a = 'lat1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqsqjqvzwx';
+            a = 'atp1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqsqtk663f';
             b = false;
         }
-        assert(a > 'lat1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq542u6a' && b);
+        assert(a > 'atp1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqdruy9j' && b);
     }
 }
 // ----

@@ -1,9 +1,9 @@
 contract C {
     function f() public pure {
-        address a = address('lax1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmscn5j');
-        a = address('lax1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpxxvxfq');
-        address b = 'lat1qy352eufqy352eufqy352eufqy352eufhsss4r';
-        b = 'lat1npm9gvssnpm9gvssnpm9gvssnpm9gvsskvvxva';
-        b = 'lat1_qqqq_qqqqqq_qqqqqqqq_qqqqqqq_qqqq_zv88eeh0q';
+        address a = address('atx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq89qwkc');
+        a = address('atx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp6n5mt2');
+        address b = 'atx1qy352eufqy352eufqy352eufqy352eufyq6zex';
+        b = 'atx1npm9gvssnpm9gvssnpm9gvssnpm9gvss9ux5qc';
+        b = 'atx1_qqqq_qqqqqq_qqqqqqqq_qqqqqqq_qqqq_qqq89qwkc';
     }
 }

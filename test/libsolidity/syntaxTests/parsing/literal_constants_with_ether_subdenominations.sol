@@ -4,7 +4,7 @@ contract c {
          a = 1 von;
          b = 2 szabo;
          c = 3 finney;
-         b = 4 lat;
+         b = 4 atp;
     }
     uint256 a;
     uint256 b;

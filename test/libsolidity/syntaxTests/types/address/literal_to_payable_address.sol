@@ -1,9 +1,9 @@
 contract C {
     function f() public pure {
-        address payable a = address('lax1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmscn5j');
+        address payable a = address('atx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq89qwkc');
         a = address(1);
-        address payable b = 'lat1qy352eufqy352eufqy352eufqy352eufhsss4r';
-        b = 'lat1npm9gvssnpm9gvssnpm9gvssnpm9gvsskvvxva';
+        address payable b = 'atp1qy352eufqy352eufqy352eufqy352eufwxxg2v';
+        b = 'atp1npm9gvssnpm9gvssnpm9gvssnpm9gvss0667nj';
     }
 }
 // ----

@@ -1,11 +1,11 @@
 pragma experimental "v0.5.0";
 contract test {
 	function f() pure public {
-		bytes32 x = sha3('lax1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpxxvxfq');
+		bytes32 x = sha3('atx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp6n5mt2');
 		x;
 	}
 	function g() public {
-		suicide('lax1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpxxvxfq');
+		suicide('atx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp6n5mt2');
 	}
 }
 // ----

@@ -46,7 +46,7 @@ namespace test
 	static const u256 shannon = u256("1000000000");
 	static const u256 szabo = shannon * 1000;
 	static const u256 finney = szabo * 1000;
-	static const u256 lat = finney * 1000;
+	static const u256 atp = finney * 1000;
 
 class ExecutionFramework
 {

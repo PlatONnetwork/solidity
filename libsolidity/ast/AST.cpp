@@ -590,7 +590,7 @@ bool Literal::looksLikeAddress() const
 		return false;
 
 	string realValue = boost::erase_all_copy(value(), "_");
-	bool isAddPrefix = boost::starts_with(realValue, "lat") || boost::starts_with(realValue, "lax");
+	bool isAddPrefix = boost::starts_with(realValue, "atp") || boost::starts_with(realValue, "atx");
 	return isAddPrefix && realValue.length() == 42;	
 }
 

@@ -957,7 +957,7 @@ BOOST_AUTO_TEST_CASE(wei_szabo_finney_ether)
 {
 	char const* sourceCode = R"(
 		(returnlll
-			(return (+ von (+ szabo (+ finney lat)))))
+			(return (+ von (+ szabo (+ finney atp)))))
 	)";
 	compileAndRun(sourceCode);
 	BOOST_CHECK(callFallback() == encodeArgs(u256(1001001000000000001)));

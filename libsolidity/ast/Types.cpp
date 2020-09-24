@@ -535,7 +535,7 @@ u256 IntegerType::literalValue(Literal const* _literal) const
 	solAssert(m_modifier == Modifier::Address, "");
 	solAssert(_literal, "");
 	string hrp = _literal->value().substr(0, 3);
-	solAssert((hrp == "lat" || hrp == "lax"), "This is not a bech32 address");
+	solAssert((hrp == "atp" || hrp == "atx"), "This is not a bech32 address");
 	bytes r = dev::decodeAddress(hrp, boost::erase_all_copy(_literal->value(), "_"));
 	solAssert(r.size() == 20, "decodeAddress failed");
 	
@@ -837,7 +837,7 @@ tuple<bool, rational> RationalNumberType::isValidLiteral(Literal const& _literal
 		case Literal::SubDenomination::Finney:
 			value *= bigint("1000000000000000");
 			break;
-		case Literal::SubDenomination::Lat:
+		case Literal::SubDenomination::Atp:
 			value *= bigint("1000000000000000000");
 			break;
 		case Literal::SubDenomination::Minute:

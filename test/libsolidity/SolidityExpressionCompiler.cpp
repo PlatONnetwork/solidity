@@ -261,7 +261,7 @@ BOOST_AUTO_TEST_CASE(int_with_ether_ether_subdenomination)
 	char const* sourceCode = R"(
 		contract test {
 			function test () {
-				 var x = 1 lat;
+				 var x = 1 atp;
 			}
 		}
 	)";

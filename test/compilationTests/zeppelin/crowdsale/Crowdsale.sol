@@ -85,7 +85,7 @@ contract Crowdsale {
     forwardFunds();
   }
 
-  // send lat to the fund collection wallet
+  // send atp to the fund collection wallet
   // override to create custom fund forwarding mechanisms
   function forwardFunds() internal {
     wallet.transfer(msg.value);

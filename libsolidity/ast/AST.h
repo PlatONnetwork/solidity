@@ -1635,7 +1635,7 @@ public:
 		Von = Token::SubVon,
 		Szabo = Token::SubSzabo,
 		Finney = Token::SubFinney,
-		Lat = Token::SubLat,
+		Atp = Token::SubAtp,
 		Second = Token::SubSecond,
 		Minute = Token::SubMinute,
 		Hour = Token::SubHour,
