@@ -1,5 +1,5 @@
 library WithModifier {
-    modifier mod() { require(msg.value > 10 lat); _; }
+    modifier mod() { require(msg.value > 10 atp); _; }
     function withMod(uint self) mod() internal view { require(self > 0); }
 }
 
