@@ -211,12 +211,12 @@ BOOST_AUTO_TEST_CASE(int_literal)
 	BOOST_CHECK_EQUAL_COLLECTIONS(code.begin(), code.end(), expectation.begin(), expectation.end());
 }
 
-BOOST_AUTO_TEST_CASE(int_with_wei_ether_subdenomination)
+BOOST_AUTO_TEST_CASE(int_with_von_lat_subdenomination)
 {
 	char const* sourceCode = R"(
 		contract test {
 			constructor() {
-				 uint x = 1 wei;
+				 uint x = 1 von;
 			}
 		}
 	)";
@@ -226,7 +226,7 @@ BOOST_AUTO_TEST_CASE(int_with_wei_ether_subdenomination)
 	BOOST_CHECK_EQUAL_COLLECTIONS(code.begin(), code.end(), expectation.begin(), expectation.end());
 }
 
-BOOST_AUTO_TEST_CASE(int_with_szabo_ether_subdenomination)
+BOOST_AUTO_TEST_CASE(int_with_szabo_lat_subdenomination)
 {
 	char const* sourceCode = R"(
 		contract test {
@@ -241,7 +241,7 @@ BOOST_AUTO_TEST_CASE(int_with_szabo_ether_subdenomination)
 	BOOST_CHECK_EQUAL_COLLECTIONS(code.begin(), code.end(), expectation.begin(), expectation.end());
 }
 
-BOOST_AUTO_TEST_CASE(int_with_finney_ether_subdenomination)
+BOOST_AUTO_TEST_CASE(int_with_finney_lat_subdenomination)
 {
 	char const* sourceCode = R"(
 		contract test {
@@ -257,12 +257,12 @@ BOOST_AUTO_TEST_CASE(int_with_finney_ether_subdenomination)
 	BOOST_CHECK_EQUAL_COLLECTIONS(code.begin(), code.end(), expectation.begin(), expectation.end());
 }
 
-BOOST_AUTO_TEST_CASE(int_with_ether_ether_subdenomination)
+BOOST_AUTO_TEST_CASE(int_with_lat_lat_subdenomination)
 {
 	char const* sourceCode = R"(
 		contract test {
 			constructor() {
-				 uint x = 1 ether;
+				 uint x = 1 lat;
 			}
 		}
 	)";

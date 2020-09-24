@@ -91,13 +91,13 @@ EVMHost::EVMHost(langutil::EVMVersion _evmVersion, evmc::VM& _vm):
 	// NOTE: keep this in sync with `EVMHost::call` below.
 	//
 	// A lot of precompile addresses had a balance before they became valid addresses for precompiles.
-	// For example all the precompile addresses allocated in Byzantium had a 1 wei balance sent to them
+	// For example all the precompile addresses allocated in Byzantium had a 1 von balance sent to them
 	// roughly 22 days before the update went live.
 	for (unsigned precompiledAddress = 1; precompiledAddress <= 8; precompiledAddress++)
 	{
 		evmc::address address{};
 		address.bytes[19] = precompiledAddress;
-		// 1wei
+		// 1von
 		accounts[address].balance.bytes[31] = 1;
 	}
 

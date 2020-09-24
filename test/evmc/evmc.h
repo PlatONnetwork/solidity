@@ -130,7 +130,7 @@ struct evmc_message
     size_t input_size;
 
     /**
-     * The amount of Ether transferred with the message.
+     * The amount of Lat transferred with the message.
      */
     evmc_uint256be value;
 

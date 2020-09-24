@@ -161,7 +161,7 @@ void ExecutionFramework::sendEther(Address const& _addr, u256 const& _amount)
 
 	if (m_showMessages)
 	{
-		cout << "SEND_ETHER   " << m_sender.hex() << " -> " << _addr.hex() << ":" << endl;
+		cout << "SEND_LAT   " << m_sender.hex() << " -> " << _addr.hex() << ":" << endl;
 		if (_amount > 0)
 			cout << " value: " << _amount << endl;
 	}

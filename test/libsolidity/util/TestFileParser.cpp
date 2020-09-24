@@ -204,12 +204,12 @@ u256 TestFileParser::parseFunctionCallValue()
 	try
 	{
 		u256 value{parseDecimalNumber()};
-		expect(Token::Ether);
+		expect(Token::Lat);
 		return value;
 	}
 	catch (std::exception const&)
 	{
-		throw Error(Error::Type::ParserError, "Ether value encoding invalid.");
+		throw Error(Error::Type::ParserError, "Lat value encoding invalid.");
 	}
 }
 
@@ -466,7 +466,7 @@ void TestFileParser::Scanner::scanNextToken()
 	auto detectKeyword = [](std::string const& _literal = "") -> TokenDesc {
 		if (_literal == "true") return TokenDesc{Token::Boolean, _literal};
 		if (_literal == "false") return TokenDesc{Token::Boolean, _literal};
-		if (_literal == "ether") return TokenDesc{Token::Ether, _literal};
+		if (_literal == "lat") return TokenDesc{Token::Lat, _literal};
 		if (_literal == "left") return TokenDesc{Token::Left, _literal};
 		if (_literal == "library") return TokenDesc{Token::Library, _literal};
 		if (_literal == "right") return TokenDesc{Token::Right, _literal};

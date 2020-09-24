@@ -53,7 +53,7 @@ namespace test
 	T(String, "string", 0)         \
 	T(Identifier, "identifier", 0) \
 	/* type keywords */            \
-	K(Ether, "ether", 0)           \
+	K(Lat, "lat", 0)           \
 	K(Hex, "hex", 0)               \
 	K(Boolean, "boolean", 0)       \
 	/* special keywords */         \
@@ -235,13 +235,13 @@ struct FunctionCallArgs
 
 /**
  * Represents a function call read from an input stream. It contains the signature, the
- * arguments, an optional ether value and an expected execution result.
+ * arguments, an optional lat value and an expected execution result.
  */
 struct FunctionCall
 {
 	/// Signature of the function call, e.g. `f(uint256, uint256)`.
 	std::string signature;
-	/// Optional `ether` value that can be send with the call.
+	/// Optional `lat` value that can be send with the call.
 	u256 value;
 	/// Object that holds all function parameters in their `bytes`
 	/// representations given by the contract ABI.
