@@ -854,7 +854,7 @@ string IRGenerator::deployCode(ContractDefinition const& _contract)
 
 string IRGenerator::callValueCheck()
 {
-	return "if callvalue() { " + m_context.revertReasonIfDebug("Ether sent to non-payable function") + " }";
+	return "if callvalue() { " + m_context.revertReasonIfDebug("Lat sent to non-payable function") + " }";
 }
 
 string IRGenerator::dispatchRoutine(ContractDefinition const& _contract)

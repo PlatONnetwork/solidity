@@ -1,5 +1,5 @@
 contract Test {
-    function test() public returns (uint ret) { return uint(address(Test(address('lat1xdz92enh3zvsqyfzxdz92enh3zvsqyfzcdm8df')))); }
+    function test() public returns (uint ret) { return uint(uint160(address(uint160(uint128(type(uint200).max))))); }
 }
 // ====
 // compileViaYul: also
